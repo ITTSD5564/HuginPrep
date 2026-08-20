@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Compose 应用专用主题：去掉系统 ActionBar，外观完全由 Material3 控制。
+         深色模式后续由 Compose 的 isSystemInDarkTheme() 在代码内处理。 -->
+    <style name="Theme.HuginPrep" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+</resources>

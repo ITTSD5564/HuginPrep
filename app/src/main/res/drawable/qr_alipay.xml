@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 支付宝收款码占位图：替换为你自己的真实收款码图片（保持同名即可） -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <path
+        android:fillColor="#1677FF"
+        android:pathData="M0,0h200v200h-200z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M12,12h176v176h-176z" />
+    <!-- 定位角1（左上） -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M24,24h48v48h-48z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M32,32h32v32h-32z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M40,40h16v16h-16z" />
+    <!-- 定位角2（右上） -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M128,24h48v48h-48z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M136,32h32v32h-32z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M144,40h16v16h-16z" />
+    <!-- 定位角3（左下） -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M24,128h48v48h-48z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M32,136h32v32h-32z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M40,144h16v16h-16z" />
+    <!-- 数据点 -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M80,40h16v16h-16z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M112,64h16v16h-16z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M96,96h24v24h-24z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M128,104h16v16h-16z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M80,136h16v16h-16z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M112,160h16v16h-16z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M152,88h24v24h-24z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M144,128h16v16h-16z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M160,160h16v16h-16z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M120,120h16v16h-16z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M56,88h16v16h-16z" />
+</vector>

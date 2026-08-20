@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- ========== 权限声明 ========== -->
+
+    <!-- 实时拍摄模式必需 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- 网络与更新检查（GitHub API / APK 下载） -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <!-- Android 13 (API 33)+：读取媒体图片。
+         本项目导入走 Photo Picker（PickMultipleVisualMedia），
+         它本身不需要任何权限，此声明仅为兼容直接读取 MediaStore 的场景。 -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+
+    <!-- Android 12 (API 32) 及以下：读取外部存储（API 33+ 由 READ_MEDIA_IMAGES 取代） -->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+    <!-- 写外部存储：自 API 29（Android 10）起分区存储强制生效，该权限被系统忽略；
+         本项目所有项目文件都写在应用专属目录 getExternalFilesDir() 下，本就无需写权限。
+         此处仅按低版本兼容声明（API 28 及以下），maxSdkVersion 限定避免无意义告警。 -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28"
+        tools:ignore="ScopedStorage" />
+
+    <!-- ========== 硬件特性 ========== -->
+
+    <!-- required=false：无相机设备（如模拟器）也能安装运行，
+         拍摄页在运行期检测相机可用性并给出友好提示。 -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.HuginPrep">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|uiMode"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- FileProvider：导出 ZIP 后通过 content:// URI 分享给其他应用（微信/网盘/电脑） -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <!-- 更新 APK 下载前台服务（dataSync 类型，targetSdk 34+ 必需声明） -->
+        <service
+            android:name=".update.DownloadService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+    </application>
+
+</manifest>
