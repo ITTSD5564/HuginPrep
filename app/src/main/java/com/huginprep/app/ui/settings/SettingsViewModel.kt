@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
-import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
@@ -59,7 +58,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     /**
      * 保存 SAF 目录选择器选中的默认项目路径：
      * 1. 持久化目录的读写权限（takePersistableUriPermission，重启后仍有效）；
-     * 2. 优先保存可解析为物理路径的形式（primary:Download/xxx），否则存目录名；
+     * 2. 优先保存可解析为物理路径的形式（primary:Download/xxx），否则存 URI 字符串；
      * 3. 刷新 UI。
      */
     fun saveDefaultProjectPath(context: Context, uri: Uri) {
@@ -70,9 +69,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
             )
         }.onFailure { e -> Log.w(TAG, "持久化目录权限失败（设备可能不支持）", e) }
 
-        val stored = pathFromTreeUri(uri)
-            ?: DocumentFile.fromTreeUri(context, uri)?.name
-            ?: uri.toString()
+        val stored = pathFromTreeUri(uri) ?: uri.toString()
         SettingsManager.setDefaultProjectPath(context, stored)
         reload()
     }

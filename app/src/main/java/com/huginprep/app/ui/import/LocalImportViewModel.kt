@@ -191,4 +191,7 @@ class LocalImportViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     private fun getString(resId: Int): String = getApplication<Application>().getString(resId)
+
+    private fun getString(resId: Int, vararg args: Any): String =
+        getApplication<Application>().getString(resId, *args)
 }

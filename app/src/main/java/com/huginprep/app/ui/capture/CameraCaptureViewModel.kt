@@ -23,6 +23,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.google.common.util.concurrent.ListenableFuture
 import com.huginprep.app.R
+import com.huginprep.app.camera.CameraHardwareParams
 import com.huginprep.app.camera.CameraParamsReader
 import com.huginprep.app.data.AppDatabase
 import com.huginprep.app.data.CameraPreset
@@ -335,7 +336,7 @@ class CameraCaptureViewModel(application: Application) : AndroidViewModel(applic
     }
 
     /** 预设优先，否则用硬件自动读取值填充当前参数 */
-    private fun applyParameters(hardware: CameraParamsReader.CameraHardwareParams) {
+    private fun applyParameters(hardware: CameraHardwareParams) {
         val preset = currentPreset
         _uiState.update {
             it.copy(

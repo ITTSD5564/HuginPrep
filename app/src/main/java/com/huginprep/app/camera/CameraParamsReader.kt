@@ -13,7 +13,7 @@ import com.huginprep.app.data.CameraPreset
  * @property focalLengths 可用焦距列表（mm），来自 LENS_INFO_AVAILABLE_FOCAL_LENGTHS
  * @property sensorSize 传感器物理尺寸（mm），来自 SENSOR_INFO_PHYSICAL_SIZE
  * @property sensorOrientation 传感器方向角（度），来自 SENSOR_ORIENTATION
- * @property isLogicalMultiCamera 是否为逻辑多摄（如主摄+长焦组合），来自 LOGICAL_MULTI_CAMERA
+ * @property isLogicalMultiCamera 是否为逻辑多摄（如主摄+长焦组合），通过能力数组判断
  */
 data class CameraHardwareParams(
     val focalLengths: List<Float>,
@@ -39,6 +39,13 @@ data class CameraHardwareParams(
 object CameraParamsReader {
 
     private const val TAG = "HuginPrep"
+
+    /**
+     * 逻辑多摄能力值（CameraMetadata.REQUEST_AVAILABLE_CAPABILITIES_LOGICAL_MULTI_CAMERA = 12）。
+     * 该常量与 LOGICAL_MULTI_CAMERA 均为 API 28 引入，minSdk 26 下不能直接引用，
+     * 因此使用能力值字面量 + 能力数组（API 21+）判断。
+     */
+    private const val CAPABILITY_LOGICAL_MULTI_CAMERA = 12
 
     /**
      * 读取指定相机的硬件参数。
@@ -69,8 +76,8 @@ object CameraParamsReader {
         val sensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION) ?: 0
 
         val isLogicalMultiCamera = characteristics
-            .get(CameraCharacteristics.LOGICAL_MULTI_CAMERA)
-            ?.isNotEmpty() == true
+            .get(CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES)
+            ?.contains(CAPABILITY_LOGICAL_MULTI_CAMERA) == true
 
         Log.d(
             TAG,
